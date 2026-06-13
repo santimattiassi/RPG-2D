@@ -2,3 +2,8 @@
 .godot/
 **/el-destello-escarlata/.godot/
 **/el-destello-escarlata/android/
+
+# Ignore unrelated projects and directories in the parent folder
+img/
+.github/
+ranaminas_el_templo_perdido.html
