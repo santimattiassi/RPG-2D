@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/Aura.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/aura.jpg" id="2_icon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(80, 80)
+
+[node name="Aura" type="CharacterBody2D" groups=["player"]]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.12, 0.12)
+texture = ExtResource("2_icon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[node name="WeaponPivot" type="Node2D" parent="."]
+
+[node name="FirePoint" type="Marker2D" parent="WeaponPivot"]
+position = Vector2(50, 0)

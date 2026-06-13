@@ -1,0 +1,33 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/Zantyr.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/zantyr_aragorn.jpg" id="2_icon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2"]
+size = Vector2(60, 80)
+
+[node name="Zantyr" type="CharacterBody2D"]
+script = ExtResource("1_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_icon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="AttackHitbox" type="Area2D" parent="WeaponPivot"]
+position = Vector2(50, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WeaponPivot/AttackHitbox"]
+shape = SubResource("RectangleShape2D_2")
+disabled = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 5.0

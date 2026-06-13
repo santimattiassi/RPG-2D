@@ -1,0 +1,4 @@
+# Ignore Godot import/export caches in subfolders
+.godot/
+**/el-destello-escarlata/.godot/
+**/el-destello-escarlata/android/

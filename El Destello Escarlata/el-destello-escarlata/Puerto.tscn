@@ -1,0 +1,176 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
+[ext_resource type="Texture2D" path="res://assets/wood_floor.jpg" id="2_wood"]
+[ext_resource type="PackedScene" path="res://Zantyr.tscn" id="3_zantyr"]
+[ext_resource type="PackedScene" path="res://Aura.tscn" id="4_aura"]
+[ext_resource type="PackedScene" path="res://Choco.tscn" id="5_choco"]
+[ext_resource type="PackedScene" path="res://HUD.tscn" id="6_hud"]
+[ext_resource type="PackedScene" path="res://MiniBoss.tscn" id="7_boss"]
+[ext_resource type="Script" path="res://scripts/LockedDoor.gd" id="8_door"]
+[ext_resource type="Script" path="res://scripts/BossFightTrigger.gd" id="9_trigger"]
+[ext_resource type="Script" path="res://scripts/TransitionArea.gd" id="10_trans"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="11_icon"]
+
+[sub_resource type="RectangleShape2D" id="WallH"]
+size = Vector2(1250, 50)
+
+[sub_resource type="RectangleShape2D" id="WallV"]
+size = Vector2(50, 1050)
+
+[sub_resource type="RectangleShape2D" id="DoorShape"]
+size = Vector2(250, 60)
+
+[sub_resource type="RectangleShape2D" id="TriggerShape"]
+size = Vector2(250, 60)
+
+[node name="Puerto" type="Node2D"]
+script = ExtResource("1_level")
+
+[node name="Floor" type="Sprite2D" parent="."]
+modulate = Color(0.65, 0.65, 0.7, 1) # Modulado más claro por visibilidad
+texture_repeat = 2
+scale = Vector2(0.09, 0.09)
+texture = ExtResource("2_wood")
+region_enabled = true
+region_rect = Rect2(0, 0, 15000, 12000)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+shape = SubResource("WallH")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/TopWall"]
+offset_left = -625.0
+offset_top = -25.0
+offset_right = 625.0
+offset_bottom = 25.0
+color = Color(0.08, 0.08, 0.1, 1)
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 500)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+shape = SubResource("WallH")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/BottomWall"]
+offset_left = -625.0
+offset_top = -25.0
+offset_right = 625.0
+offset_bottom = 25.0
+color = Color(0.08, 0.08, 0.1, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(-600, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("WallV")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/LeftWall"]
+offset_left = -25.0
+offset_top = -500.0
+offset_right = 25.0
+offset_bottom = 500.0
+color = Color(0.08, 0.08, 0.1, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(600, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("WallV")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/RightWall"]
+offset_left = -25.0
+offset_top = -500.0
+offset_right = 25.0
+offset_bottom = 500.0
+color = Color(0.08, 0.08, 0.1, 1)
+
+[node name="Zantyr" parent="." instance=ExtResource("3_zantyr")]
+position = Vector2(0, 350)
+
+[node name="Aura" parent="." instance=ExtResource("4_aura")]
+position = Vector2(0, 350)
+visible = false
+
+[node name="Choco" parent="." instance=ExtResource("5_choco")]
+position = Vector2(-80, 350)
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+process_mode = 3
+
+[node name="MiniBoss" parent="." instance=ExtResource("7_boss")]
+position = Vector2(0, -100)
+
+[node name="EntranceGate" type="StaticBody2D" parent="."]
+position = Vector2(0, 240)
+script = ExtResource("8_door")
+is_open = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EntranceGate"]
+shape = SubResource("DoorShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="EntranceGate"]
+modulate = Color(0.3, 0.3, 0.3, 1)
+scale = Vector2(1.95, 0.46)
+texture = ExtResource("11_icon")
+
+[node name="Label" type="Label" parent="EntranceGate"]
+offset_left = -50.0
+offset_top = -45.0
+offset_right = 50.0
+offset_bottom = -22.0
+text = "VERJA"
+horizontal_alignment = 1
+
+[node name="BossFightTrigger" type="Area2D" parent="."]
+position = Vector2(0, 160)
+script = ExtResource("9_trigger")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BossFightTrigger"]
+shape = SubResource("TriggerShape")
+
+[node name="ExitDocksDoor" type="StaticBody2D" parent="."]
+position = Vector2(0, -320)
+script = ExtResource("8_door")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitDocksDoor"]
+shape = SubResource("DoorShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="ExitDocksDoor"]
+modulate = Color(0.2, 0.5, 0.3, 1)
+scale = Vector2(1.95, 0.46)
+texture = ExtResource("11_icon")
+
+[node name="Label" type="Label" parent="ExitDocksDoor"]
+offset_left = -60.0
+offset_top = -45.0
+offset_right = 60.0
+offset_bottom = -22.0
+text = "BARCO ESCAPE"
+horizontal_alignment = 1
+
+[node name="BastianPortal" type="Area2D" parent="."]
+position = Vector2(0, -420)
+script = ExtResource("10_trans")
+target_scene_path = "res://Bastian.tscn"
+target_spawn_position = Vector2(0, 320)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BastianPortal"]
+shape = SubResource("TriggerShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="BastianPortal"]
+modulate = Color(0.5, 0.1, 0.5, 1)
+scale = Vector2(1.25, 0.46)
+texture = ExtResource("11_icon")
+
+[node name="Label" type="Label" parent="BastianPortal"]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -32.0
+text = "BASTIÁN"
+horizontal_alignment = 1

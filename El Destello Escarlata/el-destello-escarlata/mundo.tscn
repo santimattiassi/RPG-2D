@@ -1,0 +1,259 @@
+[gd_scene format=3 uid="uid://ds6k1lch6inuw"]
+
+[ext_resource type="PackedScene" path="res://Zantyr.tscn" id="1_zantyr"]
+[ext_resource type="PackedScene" path="res://Enemy.tscn" id="2_enemy"]
+[ext_resource type="PackedScene" path="res://Choco.tscn" id="3_choco"]
+[ext_resource type="PackedScene" path="res://HUD.tscn" id="4_hud"]
+[ext_resource type="Texture2D" uid="uid://d1iikwuudr0lr" path="res://assets/wood_floor.jpg" id="5_wood"]
+[ext_resource type="PackedScene" path="res://Spawner.tscn" id="6_spawner"]
+[ext_resource type="PackedScene" path="res://Aura.tscn" id="7_aura"]
+[ext_resource type="Script" uid="uid://bwxmrpdcv1vso" path="res://scripts/Level.gd" id="8_level"]
+[ext_resource type="Script" uid="uid://lfua3v0la5xg" path="res://scripts/Signboard.gd" id="9_sign"]
+[ext_resource type="Script" uid="uid://bgtnwg77r0wqy" path="res://scripts/TransitionArea.gd" id="10_trans"]
+[ext_resource type="Script" uid="uid://73h6apx75pjk" path="res://scripts/LockedDoor.gd" id="11_door"]
+[ext_resource type="Script" uid="uid://bgvb1d8h2yv1g" path="res://scripts/Chest.gd" id="12_chest"]
+[ext_resource type="Script" uid="uid://bhfxyxm80oce8" path="res://scripts/KeyItem.gd" id="13_key"]
+[ext_resource type="Texture2D" uid="uid://baskj0rs28qd5" path="res://icon.svg" id="14_icon"]
+
+[sub_resource type="RectangleShape2D" id="WallH"]
+size = Vector2(3050, 50)
+
+[sub_resource type="RectangleShape2D" id="WallV"]
+size = Vector2(50, 3050)
+
+[sub_resource type="RectangleShape2D" id="SignShape"]
+size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="TriggerShape"]
+size = Vector2(160, 60)
+
+[sub_resource type="RectangleShape2D" id="KeyShape"]
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="DoorShape"]
+size = Vector2(250, 60)
+
+[sub_resource type="RectangleShape2D" id="InteractShape"]
+size = Vector2(300, 120)
+
+[sub_resource type="RectangleShape2D" id="ChestShape"]
+size = Vector2(50, 50)
+
+[node name="Mundo" type="Node2D" unique_id=960124639]
+script = ExtResource("8_level")
+
+[node name="Floor" type="Sprite2D" parent="." unique_id=1712389030]
+texture_repeat = 2
+position = Vector2(-6, 2)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("5_wood")
+region_enabled = true
+region_rect = Rect2(0, 0, 37500, 37500)
+
+[node name="Walls" type="Node2D" parent="." unique_id=219324293]
+
+[node name="TopWall" type="StaticBody2D" parent="Walls" unique_id=1526506440]
+position = Vector2(0, -1525)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall" unique_id=319122196]
+shape = SubResource("WallH")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/TopWall" unique_id=1410527131]
+offset_left = -1525.0
+offset_top = -25.0
+offset_right = 1525.0
+offset_bottom = 25.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls" unique_id=705422792]
+position = Vector2(0, 1525)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall" unique_id=1704664299]
+shape = SubResource("WallH")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/BottomWall" unique_id=2061943208]
+offset_left = -1525.0
+offset_top = -25.0
+offset_right = 1525.0
+offset_bottom = 25.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls" unique_id=1044600657]
+position = Vector2(-1525, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall" unique_id=1521961316]
+shape = SubResource("WallV")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/LeftWall" unique_id=994993098]
+offset_left = -25.0
+offset_top = -1525.0
+offset_right = 25.0
+offset_bottom = 1525.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls" unique_id=1385403994]
+position = Vector2(1525, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall" unique_id=468961464]
+shape = SubResource("WallV")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/RightWall" unique_id=788509929]
+offset_left = -25.0
+offset_top = -1525.0
+offset_right = 25.0
+offset_bottom = 1525.0
+color = Color(0.1, 0.1, 0.1, 1)
+
+[node name="Zantyr" parent="." unique_id=198421915 instance=ExtResource("1_zantyr")]
+
+[node name="Aura" parent="." unique_id=535785356 instance=ExtResource("7_aura")]
+visible = false
+
+[node name="Choco" parent="." unique_id=1866235624 instance=ExtResource("3_choco")]
+position = Vector2(-100, -100)
+
+[node name="Enemy" parent="." unique_id=199208679 instance=ExtResource("2_enemy")]
+position = Vector2(500, 500)
+
+[node name="Enemy2" parent="." unique_id=807638361 instance=ExtResource("2_enemy")]
+position = Vector2(-800, 200)
+
+[node name="Enemy3" parent="." unique_id=1118229608 instance=ExtResource("2_enemy")]
+position = Vector2(1000, -600)
+
+[node name="Enemy4" parent="." unique_id=1501377885 instance=ExtResource("2_enemy")]
+position = Vector2(-1200, -1000)
+
+[node name="HUD" parent="." unique_id=1587707946 instance=ExtResource("4_hud")]
+
+[node name="Spawner" parent="." unique_id=658781721 instance=ExtResource("6_spawner")]
+
+[node name="Signboard" type="Area2D" parent="." unique_id=1038846344]
+position = Vector2(-200, -200)
+script = ExtResource("9_sign")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Signboard" unique_id=584531412]
+shape = SubResource("SignShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Signboard" unique_id=1138094444]
+modulate = Color(0.5, 0.4, 0.3, 1)
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("14_icon")
+
+[node name="Label" type="Label" parent="Signboard" unique_id=520259997]
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = -22.0
+text = "CARTEL"
+horizontal_alignment = 1
+
+[node name="CabinEntrance" type="Area2D" parent="." unique_id=54280485]
+position = Vector2(0, 150)
+script = ExtResource("10_trans")
+target_scene_path = "res://Camarote.tscn"
+target_spawn_position = Vector2(0, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CabinEntrance" unique_id=166005454]
+shape = SubResource("TriggerShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="CabinEntrance" unique_id=11070987]
+modulate = Color(0.2, 0.1, 0, 1)
+scale = Vector2(1.25, 0.46)
+texture = ExtResource("14_icon")
+
+[node name="Label" type="Label" parent="CabinEntrance" unique_id=255874568]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -32.0
+text = "CAMAROTE"
+horizontal_alignment = 1
+
+[node name="HoldEntrance" type="Area2D" parent="." unique_id=656229037]
+position = Vector2(-300, 150)
+script = ExtResource("10_trans")
+target_scene_path = "res://Bodega.tscn"
+target_spawn_position = Vector2(0, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldEntrance" unique_id=1887102789]
+shape = SubResource("TriggerShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="HoldEntrance" unique_id=196200908]
+modulate = Color(0.2, 0.1, 0, 1)
+scale = Vector2(1.25, 0.46)
+texture = ExtResource("14_icon")
+
+[node name="Label" type="Label" parent="HoldEntrance" unique_id=1732499037]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -32.0
+text = "BODEGA"
+horizontal_alignment = 1
+
+[node name="KeyItem" type="Area2D" parent="." unique_id=1954827285]
+position = Vector2(-600, 600)
+script = ExtResource("13_key")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KeyItem" unique_id=1345476728]
+shape = SubResource("KeyShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="KeyItem" unique_id=1419173054]
+modulate = Color(1, 0.84, 0, 1)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("14_icon")
+
+[node name="Label" type="Label" parent="KeyItem" unique_id=1934127368]
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = -22.0
+text = "LLAVE"
+horizontal_alignment = 1
+
+[node name="LockedDoor" type="StaticBody2D" parent="." unique_id=394910400]
+position = Vector2(400, -400)
+script = ExtResource("11_door")
+requires_key = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LockedDoor" unique_id=531132213]
+shape = SubResource("DoorShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="LockedDoor" unique_id=16329365]
+modulate = Color(0.7, 0.5, 0.3, 1)
+scale = Vector2(1.95, 0.46)
+texture = ExtResource("14_icon")
+
+[node name="Label" type="Label" parent="LockedDoor" unique_id=1842172686]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -32.0
+text = "PUERTA LLAVE"
+horizontal_alignment = 1
+
+[node name="InteractArea" type="Area2D" parent="LockedDoor" unique_id=1266695087]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LockedDoor/InteractArea" unique_id=839395486]
+shape = SubResource("InteractShape")
+
+[node name="Chest" type="Area2D" parent="." unique_id=697158544]
+position = Vector2(400, -500)
+script = ExtResource("12_chest")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chest" unique_id=1973491177]
+shape = SubResource("ChestShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="Chest" unique_id=415692725]
+modulate = Color(0.6, 0.4, 0.2, 1)
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("14_icon")
+
+[node name="Label" type="Label" parent="Chest" unique_id=475250479]
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = -22.0
+text = "COFRE"
+horizontal_alignment = 1

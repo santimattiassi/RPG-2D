@@ -1,0 +1,281 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
+[ext_resource type="Texture2D" path="res://assets/wood_floor.jpg" id="2_wood"]
+[ext_resource type="PackedScene" path="res://Zantyr.tscn" id="3_zantyr"]
+[ext_resource type="PackedScene" path="res://Aura.tscn" id="4_aura"]
+[ext_resource type="PackedScene" path="res://Choco.tscn" id="5_choco"]
+[ext_resource type="PackedScene" path="res://HUD.tscn" id="6_hud"]
+[ext_resource type="Script" path="res://scripts/NPC.gd" id="7_npc"]
+[ext_resource type="Script" path="res://scripts/HoldPuzzleManager.gd" id="8_manager"]
+[ext_resource type="Script" path="res://scripts/PuzzleButton.gd" id="9_button"]
+[ext_resource type="Script" path="res://scripts/PuzzlePlate.gd" id="10_plate"]
+[ext_resource type="Script" path="res://scripts/LockedDoor.gd" id="11_door"]
+[ext_resource type="Script" path="res://scripts/TransitionArea.gd" id="12_trans"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="13_icon"]
+
+[sub_resource type="RectangleShape2D" id="WallH"]
+size = Vector2(1050, 50)
+
+[sub_resource type="RectangleShape2D" id="WallV"]
+size = Vector2(50, 850)
+
+[sub_resource type="RectangleShape2D" id="TriggerShape"]
+size = Vector2(160, 60)
+
+[sub_resource type="RectangleShape2D" id="NPCShape"]
+size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="ButtonShape"]
+size = Vector2(50, 50)
+
+[sub_resource type="RectangleShape2D" id="DoorShape"]
+size = Vector2(250, 60)
+
+[node name="Bodega" type="Node2D"]
+script = ExtResource("1_level")
+
+[node name="Floor" type="Sprite2D" parent="."]
+modulate = Color(0.65, 0.6, 0.55, 1) # Modulado más claro por visibilidad
+texture_repeat = 2
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_wood")
+region_enabled = true
+region_rect = Rect2(0, 0, 12500, 10000)
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -425)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+shape = SubResource("WallH")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/TopWall"]
+offset_left = -525.0
+offset_top = -25.0
+offset_right = 525.0
+offset_bottom = 25.0
+color = Color(0.1, 0.08, 0.05, 1)
+
+[node name="BottomWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 425)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
+shape = SubResource("WallH")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/BottomWall"]
+offset_left = -525.0
+offset_top = -25.0
+offset_right = 525.0
+offset_bottom = 25.0
+color = Color(0.1, 0.08, 0.05, 1)
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(-525, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("WallV")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/LeftWall"]
+offset_left = -25.0
+offset_top = -425.0
+offset_right = 25.0
+offset_bottom = 425.0
+color = Color(0.1, 0.08, 0.05, 1)
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(525, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("WallV")
+
+[node name="ColorRect" type="ColorRect" parent="Walls/RightWall"]
+offset_left = -25.0
+offset_top = -425.0
+offset_right = 25.0
+offset_bottom = 425.0
+color = Color(0.1, 0.08, 0.05, 1)
+
+[node name="Zantyr" parent="." instance=ExtResource("3_zantyr")]
+position = Vector2(0, 250)
+
+[node name="Aura" parent="." instance=ExtResource("4_aura")]
+position = Vector2(0, 250)
+visible = false
+
+[node name="Choco" parent="." instance=ExtResource("5_choco")]
+position = Vector2(-80, 250)
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]
+process_mode = 3
+
+[node name="NPC_Elina" type="Area2D" parent="."]
+position = Vector2(-350, 180)
+script = ExtResource("7_npc")
+npc_name = "Elina"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_Elina"]
+shape = SubResource("NPCShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="NPC_Elina"]
+modulate = Color(0.2, 0.8, 0.4, 1) # Modulado verde sanador
+scale = Vector2(0.46, 0.46)
+texture = ExtResource("13_icon")
+
+[node name="Label" type="Label" parent="NPC_Elina"]
+offset_left = -30.0
+offset_top = -55.0
+offset_right = 30.0
+offset_bottom = -32.0
+text = "ELINA"
+horizontal_alignment = 1
+
+[node name="NPC_Orfeo" type="Area2D" parent="."]
+position = Vector2(350, 180)
+script = ExtResource("7_npc")
+npc_name = "Orfeo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_Orfeo"]
+shape = SubResource("NPCShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="NPC_Orfeo"]
+modulate = Color(0, 0, 0, 1) # Modulado negro gato
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("13_icon")
+
+[node name="Label" type="Label" parent="NPC_Orfeo"]
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = -22.0
+text = "ORFEO"
+horizontal_alignment = 1
+
+[node name="CargoPuzzle" type="Node2D" parent="."]
+position = Vector2(0, -20)
+script = ExtResource("8_manager")
+
+[node name="LeftButton" type="Area2D" parent="CargoPuzzle"]
+position = Vector2(-250, 0)
+script = ExtResource("9_button")
+button_id = 0
+prompt_message = "Presionar Botón Izquierdo"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CargoPuzzle/LeftButton"]
+shape = SubResource("ButtonShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="CargoPuzzle/LeftButton"]
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("13_icon")
+
+[node name="Label" type="Label" parent="CargoPuzzle/LeftButton"]
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = -22.0
+text = "B1"
+horizontal_alignment = 1
+
+[node name="CenterPlate" type="Area2D" parent="CargoPuzzle"]
+script = ExtResource("10_plate")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CargoPuzzle/CenterPlate"]
+shape = SubResource("ButtonShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="CargoPuzzle/CenterPlate"]
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("13_icon")
+
+[node name="Label" type="Label" parent="CargoPuzzle/CenterPlate"]
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = -22.0
+text = "PLACA"
+horizontal_alignment = 1
+
+[node name="RightButton" type="Area2D" parent="CargoPuzzle"]
+position = Vector2(250, 0)
+script = ExtResource("9_button")
+button_id = 2
+prompt_message = "Presionar Botón Derecho"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CargoPuzzle/RightButton"]
+shape = SubResource("ButtonShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="CargoPuzzle/RightButton"]
+scale = Vector2(0.38, 0.38)
+texture = ExtResource("13_icon")
+
+[node name="Label" type="Label" parent="CargoPuzzle/RightButton"]
+offset_left = -30.0
+offset_top = -45.0
+offset_right = 30.0
+offset_bottom = -22.0
+text = "B3"
+horizontal_alignment = 1
+
+[node name="ExitHoldDoor" type="StaticBody2D" parent="."]
+position = Vector2(0, -200)
+script = ExtResource("11_door")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ExitHoldDoor"]
+shape = SubResource("DoorShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="ExitHoldDoor"]
+modulate = Color(0.4, 0.4, 0.5, 1)
+scale = Vector2(1.95, 0.46)
+texture = ExtResource("13_icon")
+
+[node name="Label" type="Label" parent="ExitHoldDoor"]
+offset_left = -60.0
+offset_top = -45.0
+offset_right = 60.0
+offset_bottom = -22.0
+text = "ESCOTILLA"
+horizontal_alignment = 1
+
+[node name="HoldToDocks" type="Area2D" parent="."]
+position = Vector2(0, -320)
+script = ExtResource("12_trans")
+target_scene_path = "res://Puerto.tscn"
+target_spawn_position = Vector2(0, 280)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldToDocks"]
+shape = SubResource("TriggerShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="HoldToDocks"]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(1.25, 0.46)
+texture = ExtResource("13_icon")
+
+[node name="Label" type="Label" parent="HoldToDocks"]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -32.0
+text = "PUERTO"
+horizontal_alignment = 1
+
+[node name="HoldToDeck" type="Area2D" parent="."]
+position = Vector2(0, 380)
+script = ExtResource("12_trans")
+target_scene_path = "res://mundo.tscn"
+target_spawn_position = Vector2(-300, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HoldToDeck"]
+shape = SubResource("TriggerShape")
+
+[node name="Sprite2D" type="Sprite2D" parent="HoldToDeck"]
+modulate = Color(0.2, 0.1, 0, 1)
+scale = Vector2(1.25, 0.46)
+texture = ExtResource("13_icon")
+
+[node name="Label" type="Label" parent="HoldToDeck"]
+offset_left = -60.0
+offset_top = -55.0
+offset_right = 60.0
+offset_bottom = -32.0
+text = "CUBIERTA"
+horizontal_alignment = 1
