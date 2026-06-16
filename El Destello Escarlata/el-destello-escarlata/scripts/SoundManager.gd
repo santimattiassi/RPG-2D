@@ -50,7 +50,7 @@ func play_tone(freq_start: float, freq_end: float, duration: float, type: String
 		val *= env * volume
 		points[i] = Vector2(val, val)
 		
-	playback.push_back_frames(points)
+	playback.push_buffer(points)
 	
 	# Autodestrucción cuando termine el sonido
 	await get_tree().create_timer(duration + 0.15).timeout
