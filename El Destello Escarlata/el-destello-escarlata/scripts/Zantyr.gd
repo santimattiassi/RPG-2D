@@ -15,6 +15,10 @@ var dash_direction: Vector2 = Vector2.ZERO
 var is_attacking: bool = false
 var attack_timer: float = 0.0
 
+var knockback_velocity: Vector2 = Vector2.ZERO
+var shake_intensity: float = 0.0
+var shake_decay: float = 15.0
+
 @onready var weapon_pivot = $WeaponPivot
 @onready var hitbox_shape = $WeaponPivot/AttackHitbox/CollisionShape2D
 @onready var sprite = $Sprite2D
@@ -29,6 +33,21 @@ func _physics_process(delta: float) -> void:
 		return
 	$CollisionShape2D.disabled = false
 	$Camera2D.make_current()
+
+	# Procesar screen shake
+	if shake_intensity > 0.0:
+		$Camera2D.offset = Vector2(randf_range(-shake_intensity, shake_intensity), randf_range(-shake_intensity, shake_intensity))
+		shake_intensity = move_toward(shake_intensity, 0.0, shake_decay * delta)
+	else:
+		$Camera2D.offset = Vector2.ZERO
+
+	# Procesar knockback (aturdimiento breve al ser golpeado)
+	if knockback_velocity.length() > 50.0:
+		velocity = knockback_velocity
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, 800.0 * delta)
+		move_and_slide()
+		_check_block_push()
+		return
 
 	if GameManager.is_dialogue_active:
 		velocity = Vector2.ZERO
@@ -72,6 +91,14 @@ func _physics_process(delta: float) -> void:
 	# Movimiento normal
 	velocity = input_dir * speed
 	move_and_slide()
+	_check_block_push()
+
+func _check_block_push() -> void:
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		if collider and collider.has_method("push"):
+			collider.push(-collision.get_normal(), speed)
 
 func _start_dash(dir: Vector2) -> void:
 	is_dashing = true
@@ -92,6 +119,10 @@ func _start_attack() -> void:
 	
 	hitbox_shape.disabled = false # Encendemos el área de daño
 	sprite.modulate = Color.RED # Truco visual: Nos ponemos rojos al golpear
+	
+	# Sonido retro de espada
+	if has_node("/root/SoundManager"):
+		get_node("/root/SoundManager").play_sword()
 
 func _process_attack(delta: float) -> void:
 	attack_timer -= delta
@@ -106,9 +137,9 @@ func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	# Si lo que tocamos con la espada está en el grupo "enemies"
 	if body.is_in_group("enemies"):
 		if body.has_method("take_damage"):
-			body.take_damage(GameManager.zantyr_damage) # Daño dinámico (RPG)
+			body.take_damage(GameManager.zantyr_damage, global_position) # Pasar origen del golpe para el knockback
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, source_position: Vector2 = Vector2.ZERO) -> void:
 	if is_invulnerable or GameManager.active_character != "Zantyr":
 		return
 		
@@ -116,6 +147,24 @@ func take_damage(amount: int) -> void:
 	is_invulnerable = true
 	invulnerability_timer = 1.0 # 1 segundo de invulnerabilidad
 	
+	# Sonido retro de daño
+	if has_node("/root/SoundManager"):
+		get_node("/root/SoundManager").play_hurt()
+		
+	# Sacudir pantalla
+	shake_intensity = 8.0
+	
+	# Aplicar retroceso (knockback)
+	var from_pos = source_position
+	if from_pos == Vector2.ZERO:
+		var push_dir = -velocity.normalized()
+		if push_dir == Vector2.ZERO:
+			push_dir = Vector2.DOWN
+		knockback_velocity = push_dir * 300.0
+	else:
+		var push_dir = (global_position - from_pos).normalized()
+		knockback_velocity = push_dir * 300.0
+		
 	print("Zantyr recibió daño. Vida actual: ", GameManager.current_health)
 	
 	if GameManager.current_health <= 0:

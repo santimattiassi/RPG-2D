@@ -51,6 +51,15 @@ func _ready() -> void:
 	if prompt_label:
 		prompt_label.visible = false
 	
+	# Ocultar barra de vida ProgressBar anterior e instanciar Corazones
+	hp_bar.visible = false
+	var hearts_scene = load("res://scripts/HeartsContainer.gd")
+	if hearts_scene:
+		var hearts = hearts_scene.new()
+		hearts.name = "HeartsContainer"
+		hearts.position = Vector2(20, 20)
+		add_child(hearts)
+	
 	# Conexión de botones de Pausa
 	close_button.pressed.connect(toggle_pause)
 	btn_health.pressed.connect(_on_buy_health)
@@ -60,9 +69,6 @@ func _ready() -> void:
 	pause_menu.visible = false
 
 func _process(_delta: float) -> void:
-	hp_bar.max_value = GameManager.max_health
-	hp_bar.value = GameManager.current_health
-	
 	stamina_bar.max_value = GameManager.max_stamina
 	stamina_bar.value = GameManager.current_stamina
 	

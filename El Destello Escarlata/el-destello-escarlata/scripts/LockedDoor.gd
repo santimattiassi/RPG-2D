@@ -47,6 +47,9 @@ func _unhandled_input(event: InputEvent) -> void:
 					hud.hide_prompt()
 					hud.start_dialogue("Puerta", ["¡Usaste una Llave Antigua y la puerta se abrió!"])
 		else:
+			# Sonido de fallo al intentar abrir bloqueada
+			if has_node("/root/SoundManager"):
+				get_node("/root/SoundManager").play_fail()
 			if hud:
 				hud.start_dialogue("Puerta", ["Esta puerta está bloqueada.", "Necesitas una Llave Antigua para abrirla."])
 
@@ -55,6 +58,11 @@ func open_door() -> void:
 	is_open = true
 	collision_shape.set_deferred("disabled", true)
 	sprite.modulate.a = 0.25 # Semi-transparente para indicar que está abierta
+	
+	# Sonido retro de apertura / desbloqueo
+	if has_node("/root/SoundManager"):
+		get_node("/root/SoundManager").play_puzzle()
+		
 	print("Puerta abierta.")
 
 func close_door() -> void:

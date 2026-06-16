@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://bgvb1d8h2yv1g" path="res://scripts/Chest.gd" id="12_chest"]
 [ext_resource type="Script" uid="uid://bhfxyxm80oce8" path="res://scripts/KeyItem.gd" id="13_key"]
 [ext_resource type="Texture2D" uid="uid://baskj0rs28qd5" path="res://icon.svg" id="14_icon"]
+[ext_resource type="PackedScene" path="res://Destructible.tscn" id="15_dest"]
 
 [sub_resource type="RectangleShape2D" id="WallH"]
 size = Vector2(3050, 50)
@@ -257,3 +258,20 @@ offset_right = 30.0
 offset_bottom = -22.0
 text = "COFRE"
 horizontal_alignment = 1
+
+[node name="Bush1" parent="." instance=ExtResource("15_dest")]
+position = Vector2(-200, -100)
+type = "Bush"
+
+[node name="Bush2" parent="." instance=ExtResource("15_dest")]
+position = Vector2(-250, -50)
+type = "Bush"
+
+[node name="Bush3" parent="." instance=ExtResource("15_dest")]
+position = Vector2(200, -100)
+type = "Bush"
+
+[node name="Bush4" parent="." instance=ExtResource("15_dest")]
+position = Vector2(250, -50)
+type = "Bush"
+

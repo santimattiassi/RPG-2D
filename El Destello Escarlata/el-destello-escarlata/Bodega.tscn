@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Texture2D" path="res://assets/wood_floor.jpg" id="2_wood"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://scripts/LockedDoor.gd" id="11_door"]
 [ext_resource type="Script" path="res://scripts/TransitionArea.gd" id="12_trans"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="13_icon"]
+[ext_resource type="PackedScene" path="res://Destructible.tscn" id="14_dest"]
 
 [sub_resource type="RectangleShape2D" id="WallH"]
 size = Vector2(1050, 50)
@@ -279,3 +280,16 @@ offset_right = 60.0
 offset_bottom = -32.0
 text = "CUBIERTA"
 horizontal_alignment = 1
+
+[node name="Jar1" parent="." instance=ExtResource("14_dest")]
+position = Vector2(-300, -50)
+type = "Jar"
+
+[node name="Jar2" parent="." instance=ExtResource("14_dest")]
+position = Vector2(300, -50)
+type = "Jar"
+
+[node name="Jar3" parent="." instance=ExtResource("14_dest")]
+position = Vector2(0, 50)
+type = "Jar"
+

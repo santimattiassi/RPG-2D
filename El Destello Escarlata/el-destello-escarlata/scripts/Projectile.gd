@@ -39,10 +39,10 @@ func _on_body_entered(body: Node2D) -> void:
 	if is_enemy_projectile:
 		if body.name == "Zantyr" or body.name == "Aura":
 			if body.has_method("take_damage"):
-				body.take_damage(15) # Contrabandista carmesí hace 15 de daño
+				body.take_damage(15, global_position) # Contrabandista carmesí hace 15 de daño
 			queue_free()
 	else:
 		if body.is_in_group("enemies"):
 			if body.has_method("take_damage"):
-				body.take_damage(GameManager.aura_damage) # Daño dinámico (RPG)
+				body.take_damage(GameManager.aura_damage, global_position) # Daño dinámico (RPG)
 			queue_free()

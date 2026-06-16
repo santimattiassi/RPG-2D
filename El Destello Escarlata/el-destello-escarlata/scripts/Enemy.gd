@@ -10,6 +10,7 @@ var speed: float = 70.0
 var damage_amount: int = 20
 var base_color: Color = Color.WHITE
 var shoot_timer: float = 0.0
+var knockback_velocity: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	# Configurar las variantes de enemigos al spawnear
@@ -69,13 +70,18 @@ func _physics_process(delta: float) -> void:
 			# IA Cuerpo a cuerpo: persecución directa
 			velocity = direction * speed
 			
+		# Añadir knockback a la velocidad si está activo
+		if knockback_velocity.length() > 10.0:
+			velocity += knockback_velocity
+			knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, 600.0 * delta)
+			
 		# Mover y detectar colisión cuerpo a cuerpo
 		var collision = move_and_collide(velocity * delta)
 		if collision:
 			var collider = collision.get_collider()
 			if collider and (collider.name == "Zantyr" or collider.name == "Aura"):
 				if collider.has_method("take_damage"):
-					collider.take_damage(damage_amount)
+					collider.take_damage(damage_amount, global_position) # Pasar origen del golpe para el retroceso del jugador
 
 func _shoot_at_player(player: Node2D) -> void:
 	var proj = PROJECTILE_SCENE.instantiate()
@@ -84,9 +90,23 @@ func _shoot_at_player(player: Node2D) -> void:
 	proj.is_enemy_projectile = true
 	get_parent().add_child(proj)
 
-func take_damage(amount: int) -> void:
+func take_damage(amount: int, source_position: Vector2 = Vector2.ZERO) -> void:
 	health -= amount
 	print(enemy_type, " recibio daño! Vida restante: ", health)
+	
+	# Sonido retro de golpe
+	if has_node("/root/SoundManager"):
+		get_node("/root/SoundManager").play_hit()
+		
+	# Aplicar retroceso (knockback)
+	var from_pos = source_position
+	if from_pos == Vector2.ZERO:
+		var player = get_tree().get_root().find_child(GameManager.active_character, true, false)
+		if player:
+			from_pos = player.global_position
+	if from_pos != Vector2.ZERO:
+		var knock_dir = (global_position - from_pos).normalized()
+		knockback_velocity = knock_dir * 250.0
 	
 	# Parpadeo rojo al recibir daño
 	$Sprite2D.modulate = Color.RED

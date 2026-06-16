@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Texture2D" path="res://assets/wood_floor.jpg" id="2_wood"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/LockedDoor.gd" id="9_door"]
 [ext_resource type="Script" path="res://scripts/Chest.gd" id="10_chest"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="11_icon"]
+[ext_resource type="PackedScene" path="res://Destructible.tscn" id="12_dest"]
 
 [sub_resource type="RectangleShape2D" id="WallH"]
 size = Vector2(1050, 50)
@@ -189,3 +190,12 @@ offset_right = 30.0
 offset_bottom = -22.0
 text = "COFRE"
 horizontal_alignment = 1
+
+[node name="Jar1" parent="." instance=ExtResource("12_dest")]
+position = Vector2(-200, -100)
+type = "Jar"
+
+[node name="Jar2" parent="." instance=ExtResource("12_dest")]
+position = Vector2(200, -100)
+type = "Jar"
+

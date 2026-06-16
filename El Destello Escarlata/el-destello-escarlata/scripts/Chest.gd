@@ -27,9 +27,11 @@ func interact() -> void:
 			if GameManager.use_key():
 				is_locked = false
 				prompt_message = "Abrir Cofre"
-				# Proceder a abrirlo en esta misma interacción
 				_open_chest(hud)
 		else:
+			# Sonido de error al intentar abrir bloqueado
+			if has_node("/root/SoundManager"):
+				get_node("/root/SoundManager").play_fail()
 			hud.start_dialogue("Cofre", [
 				"Este cofre está firmemente cerrado.",
 				"Necesitas una Llave Antigua para abrirlo."
@@ -42,6 +44,10 @@ func _open_chest(hud: Node) -> void:
 	prompt_message = "Cofre Vacío"
 	# Modulación visual para dar sensación de abierto/vacío
 	$Sprite2D.modulate = Color(0.4, 0.4, 0.4, 1.0) 
+	
+	# Sonido retro de fanfarria
+	if has_node("/root/SoundManager"):
+		get_node("/root/SoundManager").play_fanfare()
 	
 	if gives_key:
 		GameManager.keys += 1

@@ -1,6 +1,6 @@
 # El Destello Escarlata
 
-**El Destello Escarlata** es un videojuego de aventura y acción top-down en 2D desarrollado en **Godot Engine 4** inspirado en clásicos como *The Legend of Zelda*. Presenta mecánicas de intercambio de protagonistas en tiempo real (Zantyr y Aura), cooperación con un leal compañero canino (Choco), progresión de personajes RPG (tienda de mejoras), complejos puzles cooperativos y desafiantes combates contra jefes finales.
+**El Destello Escarlata** es un videojuego de aventura y acción top-down en 2D desarrollado en **Godot Engine 4** con el sabor de los clásicos de 8 bits al puro estilo de *The Legend of Zelda*. Presenta mecánicas de intercambio de protagonistas en tiempo real (Zantyr y Aura), cooperación con un leal compañero canino (Choco), progresión de personajes RPG (tienda de mejoras), complejos puzles cooperativos y desafiantes combates contra jefes finales.
 
 ---
 
@@ -10,27 +10,28 @@
     *   **Zantyr:** Guerrero especializado en combate cuerpo a cuerpo. Utiliza ataques rápidos de espada que consumen estamina y hacen gran daño de área cercano.
     *   **Aura:** Hechicera de Biomagia especializada en ataques a larga distancia. Puede lanzar ráfagas de proyectiles mágicos y realizar un veloz dash (biotransporte) para esquivar ataques o cruzar abismos.
     *   *Alterna el control activo en cualquier momento pulsando la tecla `TAB`.*
+*   **Indicador de Salud de Corazones (Hearts HUD):**
+    *   La clásica barra de vida ProgressBar ha sido reemplazada por una barra de corazones vectoriales retro dibujados matemáticamente en tiempo real.
+    *   Cada corazón representa **25 HP** y soporta fracciones de medio corazón.
+    *   Aumenta dinámicamente tu fila de corazones al comprar mejoras de Salud Máxima.
+*   **Síntesis de Audio Retro 8-Bits:**
+    *   Sintetizador integrado por código (`SoundManager.gd`) que autogenera efectos retro de 8 bits en tiempo real para espada, magia, impactos, daño, cofres, errores y fanfarrias triunfales de puzles sin requerir archivos de sonido externos.
+*   **Físicas de Combate Clásicas:**
+    *   **Knockback (Retroceso):** Tanto los héroes como las sombras retroceden físicamente al ser golpeados.
+    *   **Aturdimiento:** El personaje activo sufre un breve parón de control al recibir daño.
+    *   **Screen Shake:** Temblor dinámico de cámara en impactos críticos o al recibir daño.
 *   **Compañero Canino (Choco):**
     *   Choco sigue fielmente al personaje activo actual.
-    *   Puedes ordenarle sentarse y esperar en una posición usando la tecla `X`. Esto permite activar placas de presión pesadas mientras el jugador se mueve libremente.
-    *   Choco posee físicas de paso libre a través del jugador para evitar obstrucciones, pero interactúa con interruptores de presión.
-*   **Progresión RPG e Interfaz de Pausa:**
-    *   Consigue esferas oscuras derrotando enemigos o abriendo cofres.
-    *   Abre el menú pulsando `ESC` o `P` para pausar la partida, revisar tus estadísticas actuales y comprar mejoras permanentes:
-        *   **Salud Máxima** (+50 HP)
-        *   **Daño Físico (Zantyr)** / **Daño de Hechizo (Aura)** (+10 de Daño)
-        *   **Estamina Máxima** (+50 Estamina)
-        *   **Disparo Triple de Aura** (dispara tres proyectiles mágicos en abanico)
-*   **Enemigos Inteligentes y Spawners:**
-    *   Las sombras invaden los niveles mediante generadores dinámicos que se detienen temporalmente cerca de Aura para evitar muertes injustas al spawnear.
-    *   Variedad de enemigos:
-        *   **Sombra Común (Gris):** Estadísticas equilibradas.
-        *   **Sombra Veloz (Morada):** Extremadamente rápidas, poca vida.
-        *   **Sombra Robusta (Negra):** Gigantescos tanques que infligen gran daño cuerpo a cuerpo.
-        *   **Sombras Rangers / Contrabandistas (Rojo/Naranja):** Evitan el contacto directo disparando proyectiles desde la distancia.
-*   **Combates de Jefes en Fases:**
-    *   **Sombra de la Tempestad (Puerto):** Invoca torbellinos de velocidad y ráfagas radiales de proyectiles, además de llamar esbirros al verse acorralado.
-    *   **Malakor, el Resonante Corrupto (Bastián):** El jefe final definitivo. Posee proyectiles teledirigidos (Homing) en Fase 1, un Escudo de Inmunidad Resonante alimentado por pilares distantes en Fase 2 (requiere dividirse para romperlos), y una Fase 3 Berserk con ráfagas continuas de proyectiles en espiral y velocidad duplicada.
+    *   Puedes ordenarle sentarse y esperar en una posición usando la tecla `X` para activar placas de presión mientras te mueves libremente.
+*   **Objetos Rompibles (Arbustos y Jarras):**
+    *   Arbustos en la cubierta y jarras de arcilla en camarotes/mazmorras bloquean el paso y pueden cortarse o romperse con tus ataques.
+    *   Al romperse, sueltan partículas dinámicas de hojas o arcilla y tienen un 65% de probabilidad de soltar: **Corazones de Curación** (+25 HP), **Hojas de Estamina** (+30 Stamina) o **Esferas Oscuras**.
+*   **Bloques Empujables y Puzles:**
+    *   Piedras de puzle clásicas que el jugador puede empujar de forma cardinal.
+    *   Las placas de presión aceptan y detectan el peso de los bloques para mantenerse activadas.
+*   **Jefes Finales en Fases:**
+    *   **Sombra de la Tempestad (Puerto):** Remolinos de velocidad y ráfagas radiales de proyectiles mágicos.
+    *   **Malakor, el Resonante Corrupto (Bastián):** Batalla final de 3 fases: proyectiles Homing teledirigidos, fase de escudo con pilares de resonancia destructibles por separado (Aura a distancia sobre foso, Zantyr en cuerpo a cuerpo) y fase berserk en espiral.
 
 ---
 
@@ -38,30 +39,21 @@
 
 *   **`W`, `A`, `S`, `D` / Flechas:** Mover al personaje activo.
 *   **`Z` / Clic Izquierdo:** Ataque básico.
-    *   Zantyr realiza un tajo de espada.
-    *   Aura dispara un proyectil de biomagia.
+    *   Zantyr realiza un tajo de espada (sonido de espada).
+    *   Aura dispara un proyectil de biomagia (sonido de magia).
 *   **`TAB`:** Cambiar de personaje activo.
 *   **`SPACE` / Clic Derecho:** Dash / Esquiva rápido.
 *   **`X`:** Ordenar a Choco esperar ("Stay") o seguir ("Follow").
 *   **`E`:** Interactuar con el entorno (NPCs, carteles, cofres, puertas).
 *   **`ESC` / `P`:** Abrir el menú de pausa y la tienda de mejoras.
+*   **`C`:** Consume 5 esferas para curarte 20 HP.
 
 ---
 
 ## 🗺️ Estructura de Niveles
 
-1.  **Camarote de los Capitanes (`Camarote.tscn`):** Tutorial introductorio. Explica el uso de cofres, llaves y la interacción base.
-2.  **Cubierta Principal (`mundo.tscn`):** El exterior del barco. Zona abierta repleta de combates contra las distintas variantes de sombras.
-3.  **Bodega de Carga (`Bodega.tscn`):** Nivel cerrado de puzzles. Conoce a Elina (quien cura gratis tus heridas) y a Orfeo (el gato parlante que te dará pistas). Debes activar el mecanismo en orden: Botón Izquierdo -> Placa con Choco -> Botón Derecho para abrir la escotilla.
-4.  **Muelles de Desembarco (`Puerto.tscn`):** Zona de emboscada. Una verja de acero se cierra a tu espalda y debes derrotar a la Sombra de la Tempestad para abrir el muelle de escape.
-5.  **El Bastián de Malakor (`Bastian.tscn`):** La mazmorra cooperativa final. Usa a Aura para parpadear sobre el foso y disparar al cristal de energía para liberar a Zantyr. Zantyr deberá pisar la placa para disolver la barrera de llamas de Aura. Juntos deberán adentrarse al salón del trono y derrotar a Malakor para salvar El Destello Escarlata.
-
----
-
-## 🛠️ Detalles Técnicos y Desarrollo
-
-*   **Motor:** Godot Engine 4.x
-*   **Lenguaje:** GDScript
-*   **Seguridad en Diálogos:** Durante los diálogos y lecturas de carteles, toda la física del juego se pausa, los proyectiles se congelan y los enemigos no pueden infligir daño ni moverse.
-*   **Activación Controlada de Jefes:** Los jefes no se mueven ni activan sus barras de vida en el HUD hasta que los jugadores cruzan la línea de activación física en la arena de combate.
-*   **Legibilidad Visual:** Las modulaciones de color de los mapas de la bodega, el puerto y el castillo final han sido refinados para mejorar significativamente el brillo y contraste del escenario sin perder la atmósfera oscura y mística característica de cada zona.
+1.  **Camarote de los Capitanes (`Camarote.tscn`):** Tutorial introductorio. Contiene jarras rompibles, placas y cofre con fanfarria.
+2.  **Cubierta Principal (`mundo.tscn`):** Zona abierta llena de sombras agresivas y arbustos cortables.
+3.  **Bodega de Carga (`Bodega.tscn`):** Rompecabezas secuencial de botones, aliados y jarras de soporte.
+4.  **Muelles de Desembarco (`Puerto.tscn`):** Arena de emboscada y combate de minijefe.
+5.  **El Bastián de Malakor (`Bastian.tscn`):** Mazmorra final cooperativa. Requiere usar a Aura para cruzar abismos, abrir la reja a Zantyr, y a Zantyr para empujar el bloque de piedra a la placa y desactivar la barrera de llamas de Aura para enfrentar juntos a Malakor.

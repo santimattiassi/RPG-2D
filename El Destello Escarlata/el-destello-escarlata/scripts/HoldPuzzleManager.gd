@@ -38,6 +38,10 @@ func press_button(button_id: int) -> void:
 			$RightButton/Sprite2D.modulate = Color(0.5, 1.0, 0.5)
 			$LeftButton/Sprite2D.modulate = Color(0.5, 1.0, 0.5)
 			
+			# Sonido de puzle resuelto
+			if has_node("/root/SoundManager"):
+				get_node("/root/SoundManager").play_puzzle()
+			
 			# Abrir la compuerta metálica hacia el puerto
 			var exit_door = get_parent().find_child("ExitHoldDoor", true, false)
 			if exit_door and exit_door.has_method("open_door"):
@@ -68,6 +72,10 @@ func _reset_puzzle(hud: Node) -> void:
 	$LeftButton/Sprite2D.modulate = Color(1.0, 1.0, 1.0)
 	$CenterPlate/Sprite2D.modulate = Color(1.0, 1.0, 1.0)
 	$RightButton/Sprite2D.modulate = Color(1.0, 1.0, 1.0)
+	
+	# Sonido de fallo
+	if has_node("/root/SoundManager"):
+		get_node("/root/SoundManager").play_fail()
 	
 	if hud:
 		hud.start_dialogue("Mecanismo", [

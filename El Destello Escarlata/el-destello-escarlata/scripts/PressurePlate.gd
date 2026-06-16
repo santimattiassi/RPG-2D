@@ -12,8 +12,8 @@ func _ready() -> void:
 		target_door = get_node(target_door_path)
 
 func _on_body_entered(body: Node2D) -> void:
-	# Permitir que el jugador, Choco, o enemigos activen el botón
-	if body.name == "Zantyr" or body.name == "Aura" or body.name == "Choco" or body.is_in_group("enemies"):
+	# Permitir que el jugador, Choco, enemigos o bloques activen el botón
+	if body.name == "Zantyr" or body.name == "Aura" or body.name == "Choco" or body.is_in_group("enemies") or body.is_in_group("blocks"):
 		pressing_bodies += 1
 		if pressing_bodies == 1:
 			# Placa presionada
@@ -22,7 +22,7 @@ func _on_body_entered(body: Node2D) -> void:
 				target_door.open_door()
 
 func _on_body_exited(body: Node2D) -> void:
-	if body.name == "Zantyr" or body.name == "Aura" or body.name == "Choco" or body.is_in_group("enemies"):
+	if body.name == "Zantyr" or body.name == "Aura" or body.name == "Choco" or body.is_in_group("enemies") or body.is_in_group("blocks"):
 		pressing_bodies = max(0, pressing_bodies - 1)
 		if pressing_bodies == 0:
 			# Placa liberada

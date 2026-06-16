@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://scripts/Level.gd" id="1_level"]
 [ext_resource type="Texture2D" path="res://assets/wood_floor.jpg" id="2_wood"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" path="res://scripts/BossFightTrigger.gd" id="11_trigger"]
 [ext_resource type="Script" path="res://scripts/VictoryPortal.gd" id="12_victory"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="13_icon"]
+[ext_resource type="PackedScene" path="res://PushableBlock.tscn" id="14_block"]
+[ext_resource type="PackedScene" path="res://Destructible.tscn" id="15_dest"]
 
 [sub_resource type="RectangleShape2D" id="WallH"]
 size = Vector2(1050, 50)
@@ -299,3 +301,15 @@ offset_right = 60.0
 offset_bottom = -32.0
 text = "FIN DEL JUEGO"
 horizontal_alignment = 1
+
+[node name="PushableBlock" parent="." instance=ExtResource("14_block")]
+position = Vector2(250, 140)
+
+[node name="Jar1" parent="." instance=ExtResource("15_dest")]
+position = Vector2(-200, 80)
+type = "Jar"
+
+[node name="Jar2" parent="." instance=ExtResource("15_dest")]
+position = Vector2(-150, 80)
+type = "Jar"
+
