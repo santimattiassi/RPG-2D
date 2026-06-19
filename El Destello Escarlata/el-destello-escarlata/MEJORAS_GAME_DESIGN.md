@@ -1,39 +1,45 @@
-# Mejoras de Game Design: Psicología del Jugador y Evolución Narrativa
-**Proyecto: El Destello Escarlata (Alineado con ROADMAP.md)**
+# Documento de Game Design (GDD): Psicología y Evolución de Mecánicas
+**Proyecto: El Destello Escarlata (Alineado con el ROADMAP.md y lore base)**
 
-Como Game Designer, mi rol es asegurar que la evolución del gameplay acompañe perfectamente la narrativa épica y la estructura de "Pérdida y Redención" que plantea el Roadmap. Aquí tienes las directrices psicológicas para lograrlo sin generar frustración.
+Este documento traduce la narrativa épica marítima de El Destello Escarlata y la psicología del jugador en sistemas jugables interactivos dentro de Godot.
 
 ---
 
-### 1. El Impacto de la Pérdida (La transición de Fase 1 a Fase 3)
+### 1. El Core Loop: Terrestre vs. Naval
 
-**El Problema Psicológico:** Quitarle a un jugador la mitad de sus herramientas (Zantyr) a la mitad del juego genera "aversión a la pérdida". Si el jugador sentía que Zantyr era su personaje principal, podría frustrarse, sentir que el juego se volvió injustamente difícil o incluso abandonarlo.
+**El Enfoque Psicológico:** El jugador necesita un marco de referencia estable (core loop) para que, cuando ocurran eventos excepcionales, se sientan realmente épicos.
+*   **Combate Terrestre (Core Loop - 90%):** La exploración y combate táctico ocurren a pie en ruinas y bosques corruptos. Aquí el jugador desarrolla maestría en las sinergias de personaje.
+*   **Set Pieces Navales (Eventos Excepcionales - 10%):** Son eventos de alta tensión. El jugador abandona el control individual para defender el barco (ej. operar balistas, esquivar tentáculos). Psicológicamente, rompen la monotonía y actúan como "exámenes" de tensión que elevan la escala del conflicto.
 
-**Soluciones de Diseño:**
-*   **Transferencia de Carga (No un "Nerf"):** Cuando Zantyr se sacrifica, Aura no debe sentirse más débil, debe sentirse *distinta*. Para evitar la frustración, el sacrificio de Zantyr debe dejarle a Aura un **"Recuerdo"** mecánico (ej. la espada rota de Zantyr que Aura usa como canalizador mágico). Esto le da a Aura un pequeño *dash defensivo* o un ataque cuerpo a cuerpo de emergencia que antes no tenía. El jugador siente la ausencia de la fuerza bruta, pero gana algo de agilidad.
-*   **Diseño de Niveles Compensatorio:** Los primeros niveles post-sacrificio no deben penalizar al jugador por no tener a Zantyr. Los enemigos deben ser diseñados para ser derrotados mediante control de masas (kiting), uso del entorno y trampas, enseñándole al jugador que Aura es una estratega, no un tanque.
-*   **El "Fantasma" en la UI:** Mantén la barra de Zantyr o su espacio en la UI visible pero "roto" o "congelado". Es un recordatorio visual constante de la pérdida y del motivo por el que están luchando, reforzando el tono dramático ("Grimdark moderado").
+---
 
-### 2. El Reencuentro y el Nuevo Rol (Fase 4 - Clímax)
+### 2. Sistema de Combate Evolutivo (Las 3 Fases de Adaptación)
 
-**El Problema Psicológico:** Que Zantyr regrese sin habilidades de combate directo puede sentirse como una decepción si no se implementa como una recompensa emocional masiva.
+La mecánica principal del juego es la **Adaptación a la Pérdida y Reencuentro**.
 
-**Soluciones de Diseño:**
-*   **Mecánica de Sinergia Pura (Soporte Pasivo/Activo):** Zantyr ya no es el DPS. Ahora es el "Ancla" de Aura. Cuando Zantyr entra en modo soporte, debe ofrecer algo que la magia de Aura no puede hacer. Por ejemplo: Zantyr puede usar su cuerpo para bloquear ataques mortales dirigidos a Aura, o crear un área de "Aura de Liderazgo" donde los hechizos de Aura no consumen maná o tienen doble daño (HD-2D Visual: un brillo dorado constante alrededor de Zantyr).
-*   **El Rescate como Recompensa:** El momento del reencuentro debe ser un pico de "Juice". Fanfarria emocional, animaciones únicas de Orfeo y Choco corriendo hacia él. A nivel de gameplay, es el momento en que el jugador siente que el rompecabezas está completo otra vez.
+#### Fase 1: El Dúo Dinámico (Seguridad y Poder)
+*   **Diseño:** El jugador tiene el control absoluto. Zantyr actúa como Tanque (habilidades de Provocación/Aggro y control de terreno), mientras que Aura es la Artillera (daño masivo de área con tiempos de casteo).
+*   **Situación Tipo:** Zantyr usa "Grito de Provocación" para agrupar monstruos corruptos. Aura carga su magia a salvo durante 2 turnos (o segundos) y limpia la zona. El jugador se siente invencible trabajando en equipo.
 
-### 3. Las Mascotas como Pilares Emocionales y Tácticos
+#### Fase 2: La Pérdida (Vulnerabilidad y Entorno)
+*   **Diseño:** Zantyr se sacrifica. Aura queda sola. Psicológicamente, el jugador experimenta pánico inicial, pero el diseño debe empoderarlo mediante táctica.
+*   **Evolución:** Como Aura no tiene a su escudo humano, las mecánicas de las mazmorras cambian. El jugador debe usar "Kiting" (atacar y correr), colocar **trampas mágicas**, usar cuellos de botella del terreno y manipular el entorno a su favor.
+*   **Efecto:** La transición convierte a Aura de una "arma de asedio" a una verdadera líder táctica.
 
-Dado que es un mundo serio y épico, Orfeo y Choco no son alivio cómico, son la familia de Aura cuando Zantyr no está.
+#### Fase 3: El Regreso Condicionado (Recompensa Emocional)
+*   **Diseño:** Zantyr vuelve, pero no puede pelear. Actúa como **Soporte/Buff pasivo y activo**.
+*   **Mecánica:** Zantyr no ataca, pero sigue protegiendo a Aura a su manera. Si Aura se queda quieta junto a Zantyr, recibe un "Aura de Concentración" (aumenta daño o reduce maná). Él puede bloquear proyectiles con su cuerpo. Es el cierre del arco de personajes traducido a mecánicas.
 
-*   **Orfeo (Guía "Navi" Evolutivo):**
-    *   *Fase 1:* Orfeo da pistas tácticas sobre enemigos ("Esa coraza no cederá ante magia, usa fuerza física").
-    *   *Fase 3 (Solo Aura):* Orfeo debe volverse más proactivo. Si Aura tiene poca vida, Orfeo podría lanzar un bufido a los enemigos más débiles para distraerlos por 1 segundo, demostrando que está protegiendo a su nueva capitana.
-*   **Choco (Exploración y Vínculo):**
-    *   Choco debe ser clave en la exploración (buscar recursos, activar mecanismos que requieren peso).
-    *   *Psicología de la Soledad:* En la Fase 3, permite que Aura pueda interactuar con Choco (acariciarlo, sentarse junto a él en las fogatas). Estas micro-interacciones sin beneficio mecánico son herramientas narrativas potentísimas para transmitir la soledad y la carga del liderazgo que ahora recae en Aura.
+---
 
-### 4. Respeto al Jugador ("No Grindfest")
+### 3. Sistema de Exploración: La Tripulación Animal
 
-*   **Progresión por Hitos (Milestone Leveling):** Si el juego no debe tener farmeo infinito, elimina por completo la experiencia por matar enemigos comunes. La progresión de estadísticas debe estar atada al final de cada misión principal o la recolección de artefactos específicos en los niveles (Exploración recompensada).
-*   Esto asegura que el jugador nunca se estanque por "falta de nivel", sino porque necesita adaptar su estrategia o entender mejor la dinámica de los enemigos, reforzando el pilar Táctico del RPG.
+Orfeo y Choco no son simples mascotas; son los puentes entre el jugador y el entorno, diseñados para recompensar la curiosidad.
+
+#### Sistema Guía: Orfeo (El Gato Táctico)
+*   **Escáner de Debilidades:** En combate, interactuar con Orfeo revela las debilidades elementales o tácticas de monstruos nuevos (Ej: "La coraza de esa bestia es inmune a tu magia frontal, Aura. Busca su espalda").
+*   **Detector de Peligro (Trampas/Emboscadas):** En mazmorras, si el jugador avanza hacia un suelo con runas explosivas invisibles o una habitación con una emboscada en el techo, Orfeo se eriza y lanza un maullido distintivo, salvando recursos del jugador si presta atención.
+
+#### Sistema de Interacción: Choco (El Perro Explorador)
+*   **Puzzles Activos:** Choco es indispensable para progresar en tierra. El jugador puede ordenarle pasar por huecos en la pared donde los humanos no caben, para recuperar llaves o activar palancas.
+*   **Rastreo y Búsqueda:** Choco tiene un "modo rastreo". Puede seguir el rastro invisible de los corruptos por el Sello, o desenterrar artefactos escondidos que reemplazan el farmeo (grind) con recompensas de progresión (Milestone Leveling).
