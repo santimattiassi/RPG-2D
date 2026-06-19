@@ -152,3 +152,11 @@ class_name SaveData
 *   **Gestor de Guardado (Autoload `SaveManager`):** Se encargará de serializar este recurso utilizando `ResourceSaver.save(save_data, "user://savegame.tres")` para guardar la partida.
 *   **Banderas Narrativas (Flags):** El diccionario `narrative_flags` será consultado por el `PartyManager` y el Level Design al inicio de cada escena. Si `zantyr_sacrificed` es `true`, el juego automáticamente ajustará el sistema de combate (deshabilitando el turno de Zantyr) y el gestor de IA instanciará a los enemigos correspondientes a la "Fase 2", sin importar si el jugador vuelve a visitar un área anterior.
 *   **Seguridad:** Al utilizar formato binario (`.res`) o texto estructurado (`.tres`) en la carpeta `user://`, aseguramos un proceso de I/O de disco rápido y nativo sin la sobrecarga de un analizador JSON en cada hito narrativo.
+
+---
+## Registro de Cambios (Changelog)
+
+- **[2026-06-19T14:26:00] - Antigravity (Technical Director):** 
+  - Refactorizado el sistema de personajes (`GameManager.gd` y `Level.gd`) para usar un `party_members` dinámico (Array), cumpliendo la Directiva 1.1 (Party System Modular).
+  - Creada la clase base `Pet.gd` con la Máquina de Estados básica (`FOLLOW`, `IDLE`) para seguimiento dinámico de mascotas, cumpliendo la Directiva 1.2.
+  - Añadida lógica preliminar al `HUD.gd` para manejar visualmente la pérdida de miembros de la party en el menú de pausa.
