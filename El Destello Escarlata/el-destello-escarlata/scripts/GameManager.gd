@@ -10,6 +10,7 @@ var stamina_regen: float = 30.0 # Regenera 30 de stamina por segundo
 
 var fragments: int = 0
 var resonance_seals: int = 0
+var party_members: Array[String] = ["Zantyr", "Aura"]
 var active_character: String = "Zantyr"
 var keys: int = 0
 var is_dialogue_active: bool = false
@@ -79,24 +80,25 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_TAB:
+		if party_members.size() <= 1:
+			return # No se puede cambiar si solo hay un miembro
+
+		var current_idx = party_members.find(active_character)
+		if current_idx == -1: return
+
+		var next_idx = (current_idx + 1) % party_members.size()
+		var next_character = party_members[next_idx]
+
 		var root = get_tree().get_root()
-		var zantyr = root.find_child("Zantyr", true, false)
-		var aura = root.find_child("Aura", true, false)
+		var current_node = root.find_child(active_character, true, false)
+		var next_node = root.find_child(next_character, true, false)
 		
-		if active_character == "Zantyr":
-			active_character = "Aura"
-			if zantyr and aura:
-				aura.global_position = zantyr.global_position
-				zantyr.visible = false
-				aura.visible = true
-				print("Relevo: Jugando como AURA")
-		else:
-			active_character = "Zantyr"
-			if zantyr and aura:
-				zantyr.global_position = aura.global_position
-				aura.visible = false
-				zantyr.visible = true
-				print("Relevo: Jugando como ZANTYR")
+		if current_node and next_node:
+			next_node.global_position = current_node.global_position
+			current_node.visible = false
+			next_node.visible = true
+			active_character = next_character
+			print("Relevo: Jugando como ", active_character)
 
 func _process(delta: float) -> void:
 	# Regeneración pasiva de Stamina
