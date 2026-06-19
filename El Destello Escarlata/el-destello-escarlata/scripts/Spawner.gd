@@ -1,15 +1,11 @@
 extends Node2D
 
 const ENEMY_SCENE = preload("res://Enemy.tscn")
-@export var spawn_interval: float = 3.0
-var timer: float = 0.0
+@export var max_enemies: int = 8
 
-func _process(delta: float) -> void:
-	if GameManager.is_dialogue_active:
-		return # Congelar el temporizador de oleadas
-	timer += delta
-	if timer >= spawn_interval:
-		timer = 0.0
+func _ready() -> void:
+	# Spawner estilo Zelda: Los enemigos se generan todos de una vez al entrar a la estancia
+	for i in range(max_enemies):
 		spawn_enemy()
 
 func spawn_enemy() -> void:
@@ -30,12 +26,18 @@ func spawn_enemy() -> void:
 	var random_x = randf_range(-1400, 1400)
 	var random_y = randf_range(-1400, 1400)
 	
-	# Asegurarnos de que no aparezca exactamente encima del jugador activo
+	# Asegurarnos de que no aparezca exactamente encima del jugador activo o el spawn_position
 	var player = get_tree().get_root().find_child(GameManager.active_character, true, false)
+	var player_pos = Vector2.ZERO
 	if player:
-		while player.global_position.distance_to(Vector2(random_x, random_y)) < 400:
+		player_pos = player.global_position
+	elif GameManager.next_spawn_position != Vector2.ZERO:
+		player_pos = GameManager.next_spawn_position
+		
+	if player_pos != Vector2.ZERO:
+		while player_pos.distance_to(Vector2(random_x, random_y)) < 400:
 			random_x = randf_range(-1400, 1400)
 			random_y = randf_range(-1400, 1400)
 
 	enemy.global_position = Vector2(random_x, random_y)
-	get_parent().add_child(enemy)
+	get_parent().call_deferred("add_child", enemy)

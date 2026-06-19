@@ -158,4 +158,9 @@ func _die(hud: Node) -> void:
 	if exit_door and exit_door.has_method("open_door"):
 		exit_door.open_door()
 		
+	# Permitir volver por donde vinimos
+	var entrance_door = get_parent().find_child("EntranceGate", true, false)
+	if entrance_door and entrance_door.has_method("open_door"):
+		entrance_door.open_door()
+		
 	queue_free()

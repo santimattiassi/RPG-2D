@@ -78,8 +78,9 @@ func _process(_delta: float) -> void:
 	if key_label:
 		key_label.text = "Llaves: " + str(GameManager.keys)
 		
-	if GameManager.fragments >= 20 and not overlay.visible:
-		show_end_screen(true)
+	# Removido el final del juego al conseguir 20 esferas oscuras
+	# if GameManager.fragments >= 20 and not overlay.visible:
+	# 	show_end_screen(true)
 
 func start_dialogue(speaker: String, lines: Array, on_complete: Callable = Callable()) -> void:
 	dialogue_speaker = speaker

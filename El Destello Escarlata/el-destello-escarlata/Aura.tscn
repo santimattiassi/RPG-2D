@@ -16,8 +16,6 @@ texture = ExtResource("2_icon")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_1")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position_smoothing_enabled = true
 
 [node name="WeaponPivot" type="Node2D" parent="."]
 
