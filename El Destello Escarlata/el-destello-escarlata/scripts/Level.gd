@@ -1,8 +1,12 @@
 extends Node2D
 
+const VisualPolishScript := preload("res://scripts/VisualPolish.gd")
+
 var level_camera: Camera2D
 
 func _ready() -> void:
+	VisualPolishScript.apply_to_level(self)
+
 	# Crear cámara independiente de la estancia
 	level_camera = Camera2D.new()
 	level_camera.name = "LevelCamera"
