@@ -19,6 +19,10 @@ func _physics_process(delta: float) -> void:
 	# Encontrar dinámicamente al jugador activo según el PartyManager
 	active_player = get_tree().get_root().find_child(GameManager.active_character, true, false)
 
+		
+	# Encontrar dinámicamente al jugador activo según el PartyManager
+	active_player = get_tree().get_root().find_child(GameManager.active_character, true, false)
+	
 	match current_state:
 		State.FOLLOW:
 			if active_player:
@@ -38,4 +42,5 @@ func _physics_process(delta: float) -> void:
 		State.ACTION:
 			pass
 
+			
 	move_and_slide()
