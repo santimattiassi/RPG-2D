@@ -24,7 +24,7 @@ func _ready() -> void:
 		for member in GameManager.party_members:
 			var node = find_child(member, true, false)
 			if node: node.global_position = GameManager.next_spawn_position
-		
+
 		if choco:
 			choco.global_position = GameManager.next_spawn_position - Vector2(60, 60)
 		GameManager.next_spawn_position = Vector2.ZERO
@@ -38,7 +38,7 @@ func _ready() -> void:
 				level_camera.global_position = node.global_position
 			else:
 				node.visible = false
-				
+
 	level_camera.reset_smoothing()
 
 	# Asegurar que el control se reactive

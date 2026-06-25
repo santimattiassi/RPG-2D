@@ -156,7 +156,7 @@ class_name SaveData
 ---
 ## Registro de Cambios (Changelog)
 
-- **[2026-06-19T14:26:00] - Antigravity (Technical Director):** 
+
   - Refactorizado el sistema de personajes (`GameManager.gd` y `Level.gd`) para usar un `party_members` dinámico (Array), cumpliendo la Directiva 1.1 (Party System Modular).
   - Creada la clase base `Pet.gd` con la Máquina de Estados básica (`FOLLOW`, `IDLE`) para seguimiento dinámico de mascotas, cumpliendo la Directiva 1.2.
   - Añadida lógica preliminar al `HUD.gd` para manejar visualmente la pérdida de miembros de la party en el menú de pausa.

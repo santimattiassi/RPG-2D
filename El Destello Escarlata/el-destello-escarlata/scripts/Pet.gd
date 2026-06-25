@@ -15,6 +15,10 @@ func _physics_process(delta: float) -> void:
 	if GameManager.is_dialogue_active:
 		velocity = Vector2.ZERO
 		return
+
+	# Encontrar dinámicamente al jugador activo según el PartyManager
+	active_player = get_tree().get_root().find_child(GameManager.active_character, true, false)
+
 		
 	# Encontrar dinámicamente al jugador activo según el PartyManager
 	active_player = get_tree().get_root().find_child(GameManager.active_character, true, false)
@@ -37,5 +41,6 @@ func _physics_process(delta: float) -> void:
 			velocity = Vector2.ZERO
 		State.ACTION:
 			pass
+
 			
 	move_and_slide()

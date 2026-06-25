@@ -82,13 +82,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_TAB:
 		if party_members.size() <= 1:
 			return # No se puede cambiar si solo hay un miembro
-			
-		var current_idx = party_members.find(active_character)
-		if current_idx == -1: return
-		
-		var next_idx = (current_idx + 1) % party_members.size()
-		var next_character = party_members[next_idx]
-		
+
 		var root = get_tree().get_root()
 		var current_node = root.find_child(active_character, true, false)
 		var next_node = root.find_child(next_character, true, false)

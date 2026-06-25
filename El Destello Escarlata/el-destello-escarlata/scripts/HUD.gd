@@ -153,7 +153,7 @@ func update_pause_menu_ui() -> void:
 	if not GameManager.party_members.has("Zantyr"):
 		zantyr_dmg_lbl.modulate = Color(0.3, 0.3, 0.3) # Oscurecido / Inactivo
 		zantyr_dmg_lbl.text = "Zantyr: Perdido en combate"
-	
+
 	# Vida Extra
 	if GameManager.upgrade_health_bought:
 		btn_health.disabled = true
